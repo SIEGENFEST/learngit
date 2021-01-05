@@ -4,6 +4,7 @@ git config --global user.email "email"  声明邮箱
 在一个文件夹中右键，选择Git Bash
 mkdir <filename>    创建文件夹
 cd <filename>       打开文件夹
+cd ../      到上一级文件夹
 pwd         显示当前目录
 ls          读取当前目录文件
 git init    自动生成.git隐藏文件夹（不要修改），将当前文件夹变为仓库(repository)
@@ -49,7 +50,7 @@ git diff    查看修改内容
 git checkout --<filename> 令工作区和暂存区一致
 git reset HEAD <filename> 令暂存区和仓库一致
 
-远程：
+远程：（文件都为unmodified状态）
     git remote -v               查看配置的远程仓库
     git clone <url> <name>      克隆某网址下的库，创建为当前目录下的name文件夹；简写自动命名为orgin；
     git remote add <shortname><url>    将某url添加为远程库；简写可指代该url；
@@ -57,5 +58,16 @@ git reset HEAD <filename> 令暂存区和仓库一致
     git remote rename <name1><name2>    修改简写名；
     git fetch <remote>          拉取远程仓库中本地没有的数据
     git pull <remote>           若当前分支设置了跟踪远程分支，就拉取并合并远程到本地
-    git push <remote><branch>   推送本地到远程；
+    git push <remote><branch>   推送本地到远程；branch指在本地的分支；
     git remote rm <remote>      移除远程仓库
+
+标签：git tag   显示已有标签
+    
+    git tag -a v1.4 -m"" 附注标签
+
+
+
+
+
+
+
