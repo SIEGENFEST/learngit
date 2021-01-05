@@ -1,0 +1,61 @@
+git config --global user.name "name"    声明用户名
+git config --global user.email "email"  声明邮箱
+
+在一个文件夹中右键，选择Git Bash
+mkdir <filename>    创建文件夹
+cd <filename>       打开文件夹
+pwd         显示当前目录
+ls          读取当前目录文件
+git init    自动生成.git隐藏文件夹（不要修改），将当前文件夹变为仓库(repository)
+.git 里有stage/index暂存区，自动创建的第一个分支master，指向master的指针head
+
+
+参数添加在命令后面，用空格隔开
+不要用word或记事本编辑文件
+
+文件状态：
+    untracked   从未add过的文件
+    unmodified  工作区, stage, master 里一致
+    modified    工作区不一样，stage=master（未add）
+    staged      工作区=stage, master不一样（未commit）
+
+文件放在.git文件夹所在的文件夹下后，无论是新文件还是修改旧文件都两步：
+git add <filename>        添加文件到暂存区
+    git add readme.txt
+git commit -m ""        暂存区(stage)内文件（可多个）提交到仓库内当前分支，-m后面""中填写版本说明
+
+
+cat .gitignore      生成文件，列出需要忽略的文件
+    *.[oa]
+    *~
+git rm <filename>     删除文件
+    git rm --cached filename    不删除文件，且不让Git跟踪
+git mv <name1> <name2>  重命名
+
+git log     查看提交日志，从最近到最远
+    git log --pretty=oneline    显示版本号
+    --stat 显示简略信息
+git reflog  查看操作记录，从近到远
+git reset   回退版本，head表示当前版本
+    --hard参数 用head后面^数量表示回退版本数，或用 ~数量
+        git reset --hard head^^/head~2 回退两个版本
+        或者直接写对应版本号 git reset --hard <版本号>
+git status  工作区状态
+    modified 红色表示修改过的文件还没add；绿色表示已add但未commit；
+git diff    查看修改内容
+    该命令对比工作区和暂存区的不同；
+    git diff --cached/staged 对比暂存区stage和分支master的不同；
+
+git checkout --<filename> 令工作区和暂存区一致
+git reset HEAD <filename> 令暂存区和仓库一致
+
+远程：
+    git remote -v               查看配置的远程仓库
+    git clone <url> <name>      克隆某网址下的库，创建为当前目录下的name文件夹；简写自动命名为orgin；
+    git remote add <shortname><url>    将某url添加为远程库；简写可指代该url；
+    git remote show <remote>    查看仓库信息；<remote>即填入简写；
+    git remote rename <name1><name2>    修改简写名；
+    git fetch <remote>          拉取远程仓库中本地没有的数据
+    git pull <remote>           若当前分支设置了跟踪远程分支，就拉取并合并远程到本地
+    git push <remote><branch>   推送本地到远程；
+    git remote rm <remote>      移除远程仓库
