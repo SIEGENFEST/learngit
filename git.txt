@@ -62,9 +62,29 @@ git reset HEAD <filename> 令暂存区和仓库一致
     git remote rm <remote>      移除远程仓库
 
 标签：git tag   显示已有标签
-    
-    git tag -a v1.4 -m"" 附注标签
+    git tag v1.4-lw     轻量标签
+    git tag -a v1.4 -m""附注标签
+    git tag -d<tagname> 删除标签
 
+git config --global alias.<简写> <命令>
+    给命令定义缩写；如git config --global alias.co commit
+
+
+
+
+
+
+
+
+
+
+
+网页：
+    个人网页：
+        新建仓库处填写 用户名.github.io 可创建个人网站，url为http://用户名.github.io
+        在仓库中建立index.html文件，网站上会显示相应内容
+    项目网页：
+        repository 的settings里 "launch automatic page generator"自动生成
 
 
 
