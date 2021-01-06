@@ -35,7 +35,8 @@ git mv <name1> <name2>  重命名
 
 git log     查看提交日志，从最近到最远
     git log --pretty=oneline    显示版本号
-    --stat 显示简略信息
+    --stat      显示简略信息
+    --decorate  显示分支
 git reflog  查看操作记录，从近到远
 git reset   回退版本，head表示当前版本
     --hard参数 用head后面^数量表示回退版本数，或用 ~数量
@@ -58,8 +59,18 @@ git reset HEAD <filename> 令暂存区和仓库一致
     git remote rename <name1><name2>    修改简写名；
     git fetch <remote>          拉取远程仓库中本地没有的数据
     git pull <remote>           若当前分支设置了跟踪远程分支，就拉取并合并远程到本地
-    git push <remote><branch>   推送本地到远程；branch指在本地的分支；
+    git push <remote><branch>   推送本地到远程跟踪分支；branch指在本地的分支；
+        git push <remote> <branch1>:<branch2>   本地branch1推送到远程branch2上；
     git remote rm <remote>      移除远程仓库
+    git push <remote> --delete <branch> 移除远程branch分支指针；要先把该分支合并再移除；
+
+    跟踪分支：
+    git branch -vv  查看所有跟踪分支
+    git branch -u <remote>/<branch>     令当前本地分支跟踪远程分支
+    git checkout -b <branch1> <remote>/<branch> 新建本地分支branch1和远程分支branch关联
+    git checkout --track <remote>/<branch>      跟踪并创建远程分支的本地分支
+
+
 
 标签：git tag   显示已有标签
     git tag v1.4-lw     轻量标签
@@ -68,6 +79,27 @@ git reset HEAD <filename> 令暂存区和仓库一致
 
 git config --global alias.<简写> <命令>
     给命令定义缩写；如git config --global alias.co commit
+    
+分支：指向提交对象的可变指针；新分支就是一个新指针；
+    git branch  得到分支列表；*表示当前分支；
+        -v      查看各分支最后一次提交
+        --merged/--no-merged    查看已合并/未合并分支
+    git branch <branchname>     创建分支；不会自动切换到新分支；
+    git chheckout <branch>      切换分支；其实是切换head指针指向的指针；
+    git checkout -b <branch>    新建并切换分支；
+    git merge <branch>          将某分支和当前分支合并；记得首先要切换到想并入的分支；
+        显示fastfoward  表明没有分歧直接合并并提交；
+        遇到冲突：显示conflict；创建合并但不提交；
+                 用git status查看 unmerged；修改包含冲突的文件；
+                 修改后用git add暂存；全部完成后用git status检查；git commit完成和并提交；
+    git mergetool   启动可视化合并工具；
+    git branch -d <branch>      删除已合并分支；
+    git log --decorate          查看各分支所指对象；
+    git log --oneline --decorate --graph --all  查看各个分支；
+    git rebase <branch>     将当前分支转移到以branch为基；
+        --onto <1><2><3>    将3中不在2中的内容转移到1分支上；
+    
+
 
 
 
