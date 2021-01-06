@@ -100,17 +100,6 @@ git config --global alias.<简写> <命令>
         --onto <1><2><3>    将3中不在2中的内容转移到1分支上；
     
 
-
-
-
-
-
-
-
-
-
-
-
 网页：
     个人网页：
         新建仓库处填写 用户名.github.io 可创建个人网站，url为http://用户名.github.io

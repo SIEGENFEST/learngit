@@ -34,7 +34,7 @@
         #p1{
             color: brown;
             font-family: 'cambria math';
-            font-size: 20px;
+            font-size: 18px;
             font-style: normal;
         }
         
@@ -42,15 +42,37 @@
         .pc{
             color: brown;
             font-family: 'cambria math';
-
         }
         .pc1{
-            font-size: 20px;
+            font-size: 18px;
             font-style: normal;
+            
+        }
+        .me{
+            font-size: 18px;
+            color: rgb(8, 79, 185);
 
         }
 
-        /* 后代选择器；标签1 标签2 */
+        /* 后代选择器；name1 name2，中间空格隔开； */
+        ul p{
+            font-size:18px;
+            color: brown;
+        }
+        /* 子元素选择器；name1>name2 */
+
+        /* 交集选择器；name1name2  */
+        li.emp{
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+
+        /* 序选择器 */
+        dt:nth-child(odd){
+            font-family: bahnschrift;
+        }
+
 
 
     </style>
@@ -61,17 +83,96 @@
         HTML文字
 
     </h2>
-
+    <p class="me">字体可考虑用 bahnschrift, Georia, Crambia math</p>
+    
+    <h3>id选择器</h3>
     <p id="p1">
-        id选择器，一般不使用。id要以字母或下划线开头，且不能是标签名称；注意每个id都要不同。
+        id选择器，一般不使用。<br>
+        格式为 #id{} <br>
+        id要以字母或下划线开头，且不能是标签名称；注意每个id都要不同。
     </p>
+
+    <h3>类选择器</h3>
     <p class="pc pc1">
-        一般都用类选择器。类名可以重复。一个标签可以有多个类名，用空格分隔。
+        一般都用类选择器。<br>
+        格式为.classname{} <br> 类名可以重复。一个标签可以有多个类名，用空格分隔。
     </p>
     <p>
+        <h3>后代选择器</h3>
         <ul>
-            
+            <li><p>可以设定name1内部所有name2的格式</p></li>
+            <li><p>name不一定是标签名，也可以用id名、类名等</p></li>
+            <li  class="emp"><p>格式name1 name2{} 可以无限延伸，都用空格分隔</p></li>
         </ul>
+        <h3>子元素选择器</h3>
+        <ul>
+            <li><p>指定的元素name1中所有指定的直接子元素name2，不会查找嵌套的</p></li>
+            <li class="emp"><p>格式为：<br>name1>name2{<br>key: value;<br>} <br>用>连接，可以无限延伸；不要空格。不再另外演示。</p></li>
+        </ul>
+        <h3>兄弟选择器</h3>
+        <ul>
+            <li><p>给紧跟在name1后的name2设置属性；只有紧跟的才有效；</p></li>
+            <li><p>格式name1+name2{}</p></li>
+        </ul>
+        <h3>交集选择器</h3>
+        <ul>
+            <li><p>选中的name中相交的部分，可以用标签名类名id名<br>一般用来选择某标签中的某些类</p></li>
+            <li><p>一般不用，都用类选择器</p></li>
+            <li class="emp"><p>格式name1name2{} <br> 注意中间什么都不要加</p></li>
+        </ul>
+        <h3>并集选择器</h3>
+        <ul>
+            <li><p>给所有选中的选择器添加属性</p></li>
+            <li><p>一般不用，都用类选择器</p></li>
+            <li class="emp"><p>格式name1,name2{} <br> 中间用逗号连接</p></li>
+        </ul>
+    </p>
+    <h3>序选择器</h3>
+    <dl class="pc pc1">
+        <dt>name:first-child{}</dt>
+        <dd>选中同级别中第一个标签，不区分标签类型</dd>
+        <dt>name:last-child</dt>
+        <dd>同级别最后一个，不区分类型</dd>
+        <dt>name:first-of-type{}</dt>
+        <dd>同级别中同为name标签的第一个</dd>
+        <dt>name:nth-child(n)</dt>
+        <dd>
+            同级别第n个；不区分；<br>n=odd则选中奇数，n=even选中偶数；<br>
+            n=an+b，即选中an+b（n从0递增），如2n+1就是选中奇数个；
+        </dd>
+        <dt>name:nth-of(n)</dt>
+        <dd>同级别n个，区分标签</dd>
+        <dt>name:only-child</dt>
+        <dd>选中name中唯一的标签</dd>
+
+    </dl>
+
+    <h3>属性选择器</h3>
+    <dl>
+        <dt>[attribute]</dt>
+        <dd>
+            选中有指定属性的标签    <br>
+            格式   name[key]{}     <br>
+            如 p[id]{} 为选中有id属性的p标签
+
+        </dd>
+        <dt>[attribute=value]</dt>
+        <dd>
+            选中属性为一定值的标签  <br>
+            格式 name[key=value]{}  <br>
+            取值以xxx开头： <br>
+            name[key^=xxx]  <br>
+            取值以xxx结尾：  <br>
+            name[key$=xxx]  <br>
+            取值包含xxx：  <br>
+            name[key*=xxx]  <br>
+
+        </dd>
+    </dl>
+    <h3>通配符</h3>
+    <p>
+        给所有标签设置样式
+        格式：*{key: value;}
     </p>
 
 
