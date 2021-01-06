@@ -1,0 +1,145 @@
+<!DOCTYPE html> //指令，不是标签；DTD文档声明，必须写在HTML第一行；
+<html>//双标签; html就是超文本，给文本添加语义；http协议是规范浏览器和服务器的沟通的；URL是服务器地址；浏览器绘制网页内容并实现用户与网页的交互；
+    <head>
+            <meta charset="UTF-8" /> 
+                //单标签；此处指定字符集；注意记事本保存时候也要用UTF-8；code自动保存即为UTF-8；
+            <title>
+                //显示在网页上方标签上
+            </title>
+            <base href="a标签若不输入链接地址，就链接到该默认地址上" target="_blank">//base标签可以定义默认链接和默认打开方式，a标签中不用再写target属性
+    </head>
+    <body>
+         <!-- 这是注释，ctrl+/为注释快捷键 -->
+        //所有标签都有id属性，通过赋值可以区分
+        //输入后按Tab就会自动加上<>成为标签
+        //body标签将内容显示在网页上，一对html中只能有一对body
+        <h1></h1>
+            //h标签有h1-h6，表示标题语义；h1只能出现一次；     
+        <p>//p标签表示一个段落</p>
+        <br>//可实现换行；使用一次换一行；
+        <hr/>//表示一条水平分割线；
+        <strong></strong>    //强调重要性的文字
+        <ins></ins>     //插入的文字
+        <em></em>       //强调的文字
+        <del></del>     //删除的文字
+
+        字符实体：
+            HTML会把多个空格/回车/Tab作为1个空格处理；预留字符无法直接显示；
+            （分号要写）
+            &nbsp;  =1个空格
+            &lt;    =<
+            &gt;    =>
+        
+        插入：
+            路径：路径不要有中文。最好都使用相对路径，即从代码文件夹开始找；如果和.html在同一个文件夹内（即同级），直接写文件名即可；如果在文件夹内文件夹（下级文件夹），就从.html所在的文件夹里开始写路径；上级文件夹就用../路径。绝对路径从盘符开始如C:\路径；
+            <img src="1.png" width="500" height="300">  //插入图片
+                属性有：width,height,如果只指定宽或高就会等比拉伸；title-鼠标悬停时显示的内容；alt-alternate,图片不见时显示的替代内容;      
+            <video src=""></video>  //插入视频
+                controls="controls" //显示进度条；
+                autoplay="autoplay" //自动播放；
+                poster="路径"   //播放前显示的占位图片；
+                loop="loop"     //自动循环；
+                <video>
+                <source src="" type="视频格式"></source>
+                </video>
+            <audio src=""></audio>  //插入音频
+
+        链接：<a href="跳转的目标界面">文字或图片</a>
+            //a标签相当于一个链接，可以是本地也可以是网上，也可以跳转到当前页面的某个部分；URL要写全，例如https://www.baidu.com
+            //属性：target可赋值"_self"（原网页打开，为默认）"_blank"(新建网页)；
+                title同img的title，鼠标悬停显示内容；
+            //假链接：href="#"（跳转到原来页面顶部）或者”JavaScript:"（如果在原网页打开就无反应，新标签页打开就打开空页面）
+            //跳转至某部分：给在相应位置标签的id赋值，令<a href="#相应id">;跳转到新界面的某个位置，就令href="路径#id";
+        
+        列表标签：将一堆数据作为一个整体
+            无序列表unordered list：数据无先后顺序;
+                <ul>//表示列表标签
+                    <li>条目内容1<li>//表示条目标签
+                    <li>条目内容2<li>
+                </ul>
+                //ul标签和li标签是整体，一起出现；ul标签内一般只包含li标签，li标签内可继续放其它标签。
+                //快捷生成：>表示下级，+表示同级；例如ul>li*3>h3+ul>li*3，表示ul里有3个li，每个li里包含1个h3和含3个li的ul；
+            
+            有序列表ordered list，数据有先后顺序；
+                <ol><li></li></ol>
+
+            定义列表definition list；添加描述信息；
+                <dl>
+                    <dt>定义列表标题</dt>
+                    <dd>标题对应的描述</dd>
+                <dl>
+                //同ul-li,dl和dt/dd为组合，一起出现；dl中一般只有dt/dd标签。
+                /t建议1个dt对应1个dd，若需要多条描述建议在dd中添加；
+            
+        表格标签：
+            <table>//一个表格；属性：border(设置边框宽度), align(控制水平对齐)"center""left""right",cellspacing(外边距),cellpadding(内边距), width, height；
+                <caption>表格标题</caption>
+                <thead>//表头，即表格最上面一行
+                    <tr>//表格的一行；属性：valign(控制垂直对齐)"center""top""bottom";
+                        <td></td>//行中一格
+                    <tr>
+                </thead>
+                <tbody>//表格主体
+                    <tr><td><td></tr>
+                </tbody>
+                <tfoot>//表格的附加信息
+                    <tr><td><td></tr>
+                </tfoot>//表尾，最下面一行；
+            </table>
+
+        表单标签：收集用户信息            
+            <form action="">//action内填入要接受信息的服务器的地址；
+                 <fieldset> <legend>表单</legend>//添加边框及标题；
+                （此处可输入文字）<表单元素>//元素就是标签；
+                </fieldset>
+            </form>
+            元素：
+                <input type="" value="" name="" checked="">
+                    type="text"     //明文输入框
+                    type="password" //暗文输入框
+                    type="number""url""email"//限制输入类型；
+                    type="radio"    //单选框，默认下不会互斥；互斥需要name属性相同；只能一个默认选中；
+                    type="checkbox" //多选框；可多个默认选中；
+                    type="button"   //按钮；配合js完成操作；
+                    type="image"    //图片定义按钮；
+                    type="hidden"   //不出现在界面；
+                    type="reset"    //重置；
+                    type="submit"   //提交；
+                    name        //有name属性点击submit后才会提交；单选框和多选框中选项name属性需要一致；
+                    checked     //默认选择某项则在该项添加checked="checked"属性；
+                    value       //文本框为默认填充的文本；选择框为该选项对应提交的内容；
+                <label for="某元素id">文字</label>  //将文字和元素关联；悬停在文字上元素会高亮；只能在form里用；
+                下拉列表选择：
+                <select>
+                    <optgroup label="">//将选项分组；该标签可省略；
+                        <option> </option>
+                    </optgroup>
+                </select>
+                <option>中元素：
+                    selected="selected"//默认选择该条；
+                    value//选择该选项提交上去的值；
+
+        详情和概要标签：折叠，节省空间
+            <details>
+                <summary> </summary>
+            </details>    
+
+        <marquee> 内容 </marquee>    //跑马灯滚动显示
+            direction       //滚动方向；"left""right""up""down";
+            scrollamount    //滚动速度；数值；
+            loop        //滚动次数；默认-1无限；
+            behavior    //滚动类型；"slide""alternate";
+            <marquee>   
+                <img src="">//引用图片
+            </marquee>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>

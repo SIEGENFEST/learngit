@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <!-- <style> must in <head></head>, type="text/css" -->
+    <style type="text/css">
+        /* 标签选择器；同时设定所有相同标签的样式；set style for <p> */
+        h2{
+            /* format:     key: value; */
+
+            /* 文本装饰 */
+                text-decoration:none;
+                /* none:清除装饰；underline:下划线；overline:上划线； */
+                color: rebeccapurple;
+                /* 1.英文单词; 2.rgb(255,0,0);3.rgba(r,g,n,a); 4.#______ */
+                /* rgb三个值一样就是灰色，越大越浅；rgba最后一个参数表示透明度 */
+                /* 4.为十六进制，前两位为r，中间两位为g，最后两位为b  */
+
+
+            /* 文本格式 */
+                text-align: center;     /* 水平位置  */ 
+                text-indent: 0em;       /* 首行缩进，em为一个文字宽度；或者用px； */
+                            
+            /* 文字属性 */
+                font-style: italic;    /* 文字样式；快捷键fs；italic倾斜；*/
+                font-weight: bold;      /* 文字粗细；数值可取100-900 */
+                font-size: 40px;        /* 大小；可以填数值px */
+                font-family: 'Georgia','cambria math','microsoft yahei'; 
+                /* 字体；备选方案用","相隔；取值如果是中文要加""；此处前两个字体只有英文没有中文，所以中文用微软雅黑显示  */
+                /* font:italic bold 40px Georgia,'microsoft yahei';  这是以上四个属性简写；以空格相隔，分号结尾，会自动赋值；前两个可以省略，size不能 */
+                               
+        }
+
+        /* id选择器；选中某一id单独编辑；要加# */
+        #p1{
+            color: brown;
+            font-family: 'cambria math';
+            font-size: 20px;
+            font-style: normal;
+        }
+        
+        /* 类选择器，选择一类编辑；要加. */
+        .pc{
+            color: brown;
+            font-family: 'cambria math';
+
+        }
+        .pc1{
+            font-size: 20px;
+            font-style: normal;
+
+        }
+
+        /* 后代选择器；标签1 标签2 */
+
+
+    </style>
+
+</head>
+<body>
+    <h2>
+        HTML文字
+
+    </h2>
+
+    <p id="p1">
+        id选择器，一般不使用。id要以字母或下划线开头，且不能是标签名称；注意每个id都要不同。
+    </p>
+    <p class="pc pc1">
+        一般都用类选择器。类名可以重复。一个标签可以有多个类名，用空格分隔。
+    </p>
+    <p>
+        <ul>
+            
+        </ul>
+    </p>
+
+
+</body>
