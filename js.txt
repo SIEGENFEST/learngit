@@ -7,31 +7,244 @@
     需要将代码放到相应元素后面；或者在<script></script>中添加window.onload=function(){}，再将代码写在{}里面；
     2.外链js和内嵌js不能出现在同一对<script>标签中；
 
+第一行写'use strict'
 每一句末尾都要加半角分号;大小写有区别;
+注释：
+    多行：/* */ 快捷键ctrl+/
+    单行：//
 
 输出方式：
     弹窗
         alert("");   数字不用加""
         confirm("");
         prompt("");
-
     网页内容区<body>
         document.write("");
-
     工作台
         console.log("");
         console.warn("");
         console.error("");
 
-常量：
-    数number, 字符串""或''括起来, 布尔true或false, 自定义常量（定义后就不能改变）；
+数据类型：
+    数number;
+    字符串string, ""或''括起来;
+        转义字符\；\'输出';\n换行;\\输出\;
+        可以用+连接；
+        `${<str>}`    直接读取字符串内容；注意外面是反引号`
+            例如 var name = '小明';var age = 20;
+            var message = `你好, ${name}, 你今年${age}岁了!`;
+        <str>.toUpperCase;      转变为大写； 
+        <str>.toLowerCase;      转变为小写；
+        <str>.indexOf("a");     搜索a出现位置；
+        <str>.substring(n,m);   返回区间n,m的子串；
+    布尔boolean, true或false;
+    未定义undefined;
+    空Null;
+    数组array;
+        <arr>.length;       数组长度；
+        <arr>[];            索引；以0开头；注意如果越界则数组大小会改变；
+        <arr>.indexOf();    查找位置；
+        .slice(n,m);        返回n到m-1的子数组；
+        .push();            给末尾添加元素；
+        .pop();             删除最后一个元素；
+        .unshift();         头部添加元素；
+        .shift();           删除第一个元素；
+        .sort();            排序；
+        .reverse();         翻转；
+        .splice(n,m,'');    删除n到m的元素，再从相应位置添加指定元素；
+        .concat(arr2);      将arr2连接到arr后面；
+        .join('');          将元素用指定字符串连接，返回连接后字符串；
+        arr = [...arr1,...arr2];    arr1和arr2连接起来成为arr；
+    对象Object;
+        var <object>={<key>: <value>};
+        引用时<object>.<key>;
+        <key> in <object>;  判断某一对象是否有某属性；
+    自定义常量（定义后就不能改变）；
 
-变量：
-    let/var <name> = <value>;   定义为name的变量并初始化；
+声明变量及赋值：使用前一定要声明，否则可能有问题；
+    let/var <name> = <value>;   定义为name的变量并初始化；变量不用区分类型；
         let/var a, b, ...;      同时定义多个变量;
-    <name> = <value>;       赋值；注意等号前后要空格；
+    <name> = <value>;       赋值；
     如果用var，定义同名变量，后的定义会覆盖前面的；
     如果用let，定义同名变量会报错；
+
+    解构赋值：
+        [x1,x2,x3=m] = [a,b,c];
+            可以省略元素，即左边可以比右边短；省略的用逗号分隔；
+            可以默认值，如没有输入c则x3=m；如果没有默认值则为undefined;
+        {k1,k2,k3} = <object>;  元素赋值为对象中对应名称属性的值；
+            {k1:ke1,k2,k3=true} = <object>   k1的赋值为对象中ke1属性的值；如果对象中没有k3属性则k3=true；
+        注意，如果已经声明了变量，解构赋值语句要用()括起来，否则不合法；
+        例如函数接受一个对象作为参数：
+            函数：
+            function buildDate({year, month, day, h=0, m=0, s=0}) 
+                {var Date=0; return Date(year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second);}
+            调用：
+            var day={year:2017,month:1,day:1,h:20,m:15};
+            buildDate(day);
+            或者：
+            buildDate({year:2017,month:1,day:1,h:20, m:15});
+
+数据类型转换：
+    let a = typeof <name>;      检测数据类型并赋值给a；
+    转换为字符串：
+        let a = <name>.toString();  将name变量转换为字符串赋值给a；name变量不变；undefined,null不能用；
+        let a = String(); let a = <value> + ''/"";
+    转换为数值：
+        Number(<name>); +<name>;   string中没有数据则结果是0，不止有数字结果是NaN；undefined为NaN；
+        parseInt(<name>);parseFloat(<name>);   将传入类型当做string，提取数字部分；遇到非数值就停止，所以null,undefined为NaN；
+    转换为布尔：
+        Boolean(<name>);    
+            string无内容为false；
+            数值0和NaN为false；
+            undefined,null为false；
+            其余为true；
+
+运算符：
+    数值运算：
+        string外的非数值类型会自动转换为数值类型参与运算；
+        NaN参与则结果为NaN；
+        数值+string相当于拼接，如 1+"abc" 结果是"1abc"；
+        数值-string会将string转为数字，如 1-"23" 结果是-22；
+        %取余数；余数正负取决于被除的；
+        a++;a--; 先运算再自增/自减；++a;--a; 先自增/减再运算；
+    
+    关系运算：
+        NaN参与比较结果都是false；（NaN===NaN）结果也为false，只有isNaN(NaN)为true；
+        &&与；||或；!非；
+        注意浮点数在比较时只能做差看是否小于某个值；
+            1/3 === （1 - 2/3）        为false；
+            (1/3 -(1 - 2/3)) < 0.00001 为true；
+        == 会转换类型；一般不用；
+            string和数值比较会将string转换为数值；都是string则比较的是Unicode；
+        === 不转换类型比较；如果类型不一致返回false；
+
+        A ? B : C;  A若真则输出B，假则输出C；
+
+流程：
+    if：
+        if(){1} else{2}  ()中为真则执行{1}，不为真执行{2}；
+        if(){} else if(){} else{}
+        最好将常量写在前面，避免写成=使变量赋值；
+    switch：
+        switch(){
+            case A: A;break;
+            case B: 
+            default: D;break;
+        }
+        判断的数据类型要相同；
+        注意要break结束switch，否则后面每一条都会执行（所以执行语句外面不用{}）；default可省略；
+    for:
+        for (a;b;c) {d}    执行a；判断b为真，执行d，再执行c，再判断b；
+        for (var k in <>) {}    循环出一个对象的所有属性；
+    while：
+        while () {}     ()为真，执行{}；
+        do {} while (); 执行{}，再判断(),若为真则再执行{}；结尾要分号；
+    break:
+        结束switch；
+        结束循环；只能跳出一层；
+    continue：
+        进入下一次循环；
+
+map: 建立对应的key-value;
+    var <name> = new Map(['a',1],['b',2],...);
+    其实是二维数组；
+    <m>.set('c',3);   添加一组key-value；对同一个key重复添加value，后面的值会覆盖前面；
+    .has('a');     查找是否有这个key；
+    .get('a');     查找key对应的value，结果为1；
+    .delete('a');  删除这一组；
+set:  一组key；没有重复；
+    var <name> = new Set(str); 一维数组；重复元素自动过滤；
+    <s>.add('')     添加key；
+    .delete()       删除key；
+for (var k of <m/s/arr>) {} 遍历；
+    for in  遍历属性；
+    for of  遍历集合本身元素；一般用for of；
+
+变量定义：
+    作用域：
+        全局作用域：默认全局对象window；全局对象下定义的变量为全局变量；
+            顶层函数就是全局变量，比如window.alert；
+        局部作用域：就是一个函数内部；
+            可以用var定义变量；
+        块级作用域：语句块内部，比如for等，用{}分隔的部分；
+            只能用let声明变量；如果用var就相当于在整个函数内声明；
+    一个作用域内定义的变量只能在内部使用；
+    使用变量时，先在当前作用域内查找，如果没有再到上一级作用域查找；所以重名变量优先使用内部的；
+    名字空间：避免某函数中定义全局变量和其它函数定义的重名；
+        将本函数中所有变量绑定到一个全局变量里：
+        var <A>={};     //定义一个<A>名字空间；
+        <A>.<var> = ...;    //本函数中变量与<A>变量绑定；
+        function <A>.<fun>(){}  //本函数中定义的函数与<A>变量绑定；
+
+
+
+
+函数：
+    function <fun>(x1=m,x2,...<arr>){          
+            //使用...<arr>，则输入参数第一二个分别给x1, x2，剩下的放在<arr>数组里；
+            //x1=m表示如果没有输入x1形参，则x1默认值为m；
+        if (typeof x1 !== 'number') {...;}  //如果输入的参数少于设置的，可以通过该语句设置默认参数；
+        if (arguments.length === 1) {x2=x1,x1=0;}//通过该语句，x1成为可选参数；所以最好把可选参数放到后面；
+        var ...;    //先把内部要用的变量定义了；
+        ...;
+        return a;}   //注意要写在一行，因为行末尾会自动添加分号；
+        <fun>为函数名，其实是全局变量；x为函数参数，多参数以逗号分隔；
+        运行到return就结束并返回结果a；
+    arguments是伪数组，包含所有输入的参数；
+    arguments[i]        指代第i个参数；
+    arguments.length    参数个数；
+
+    方法：绑定在对象里的函数；
+
+        function <fun>(){
+                var t1=this;      
+                    //this指代此处绑定的对象即obj1；因为可能改变，所以此处用t1捕获即用t1指代obj1；
+                var <obj2>={
+                    var k1= t1.key1;    //此处如果用this则指代obj2；t1使方法内的对象仍能使用外部对象的属性，比如key1；
+        }
+        var <obj1>={
+            key1: v1;
+            key2: function <fun>();
+        }
+
+        在全局中调用含有this的函数：
+            <obj>.<key>()     //显示在绑定函数的obj.key中运行得到的值；
+            <fun>.apply(<obj>,[x1,...]) //<obj>为this指代的对象；[]中填写函数参数；
+            <fun>.call(<obj>, x1,...)   //<obj>为this指代的对象；直接在后面写参数；
+            普通函数令<obj>=null即可；
+            装饰器：利用apply改变函数行为；
+                例如统计parseInt()调用次数：
+                    var count = 0;
+                    var oldParseInt = parseInt; // 保存原函数
+                    window.parseInt = function () {
+                        count += 1;     //统计次数
+                        return oldParseInt.apply(null, arguments); // 调用原函数
+                    };
+    
+    高阶函数：以函数作为参数的函数；
+
+        
+
+
+    
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
 
 
 
