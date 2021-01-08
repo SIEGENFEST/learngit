@@ -53,6 +53,30 @@
             color: rgb(8, 79, 185);
 
         }
+        .sp{
+            font-size: 20px;
+            color: rgb(255, 255, 255);
+        }
+        .ex{
+            width: 500px;
+            height: 150px;
+            background-color: rgb(202, 202, 202);
+            /* 外边框*/
+            margin-left: 5px;   
+            /* 内边框 */
+            padding-left: 5px;
+            padding-top: 5px;
+        }
+        .inl{
+            width:250px;
+            height: 30px;
+            background-color: rgb(112, 112, 112);
+            color: rgb(235, 235, 235);
+            text-align: center;
+        }
+        .pin{
+            display: inline-block;
+        }
 
         /* 后代选择器；name1 name2，中间空格隔开； */
         ul p{
@@ -83,7 +107,10 @@
         HTML文字
 
     </h2>
-    <p class="me">字体可考虑用 bahnschrift, Georia, Crambia math</p>
+    <p class="me">
+        字体可考虑用 bahnschrift, Georia, Crambia math <br>
+        快捷键：ctrl+k,ctrl+0 折叠所有代码；ctrl+[/] 选中文本向左/右移动一个Tab；
+    </p>
     
     <h3>id选择器</h3>
     <p id="p1">
@@ -174,6 +201,27 @@
         给所有标签设置样式
         格式：*{key: value;}
     </p>
-
-
-</body>
+    <div class="ex">
+        <h3>div和span</h3>
+        <p>
+            div用来划分大范围的区域，容器级（可以嵌套其它所有标签） <br>
+            span用来划分<span class="sp">部分区域</span> ，文本级（里面只能放文本等）
+        </p>
+    </div>
+    <h3>文本级标签</h3>
+    <p>
+        只能放文字/图片/链接 <br>
+        span, p, strong等；除了p以外都是行内元素（不会换行）
+    </p>
+    <p>
+        行内元素默认和内容一样宽，且不能设置宽高；<br>
+        块级元素尺寸默认和父元素一样，可以设置宽高； <br>
+        块级行内元素既不换行又可以设置宽高，比如img； <br>
+        添加属性 
+        <span class="inl pin">display: inline-block;</span> 
+        可以让元素（块级或行内）不换行又能设置宽高；<br>
+        一般用在span上。
+    </p>
+    <p>
+    </p>
+    </body>
