@@ -58,7 +58,8 @@ git reset HEAD <filename> 令暂存区和仓库一致
     git remote show <remote>    查看仓库信息；<remote>即填入简写；
     git remote rename <name1><name2>    修改简写名；
     git fetch <remote>          拉取远程仓库中本地没有的数据
-    git pull <remote>           若当前分支设置了跟踪远程分支，就拉取并合并远程到本地
+    git pull <remote>/<branch1> <branch2>   拉取远程branch1到本地branch2;
+        若当前分支设置了跟踪远程分支，就不用填写branch；直接用git pull <remote>即可；
     git push <remote><branch>   推送本地到远程跟踪分支；branch指在本地的分支；
         git push <remote> <branch1>:<branch2>   本地branch1推送到远程branch2上；
     git remote rm <remote>      移除远程仓库
