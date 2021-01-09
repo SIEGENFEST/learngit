@@ -65,6 +65,7 @@
         var <object>={<key>: <value>};
         引用时<object>.<key>;
         <key> in <object>;  判断某一对象是否有某属性；
+        function也是object；
     自定义常量（定义后就不能改变）；
 
 声明变量及赋值：使用前一定要声明，否则可能有问题；
@@ -119,7 +120,8 @@
     
     关系运算：
         NaN参与比较结果都是false；（NaN===NaN）结果也为false，只有isNaN(NaN)为true；
-        &&与；||或；!非；
+        &&与；||或；!非；   
+        x = undefined||a; 相当于x=a；
         注意浮点数在比较时只能做差看是否小于某个值；
             1/3 === （1 - 2/3）        为false；
             (1/3 -(1 - 2/3)) < 0.00001 为true；
@@ -215,18 +217,17 @@ for (var k of <m/s/arr>) {} 遍历；
             key2: function <fun>();
         }
     在全局中调用含有this的函数：
-        <obj>.<key>()     //显示在绑定函数的obj.key中运行得到的值；
-        <fun>.apply(<obj>,[x1,...]) //<obj>为this指代的对象；[]中填写函数参数；
-        <fun>.call(<obj>, x1,...)   //<obj>为this指代的对象；直接在后面写参数；
+    <obj>.<key>()     //显示在绑定函数的obj.key中运行得到的值；
+    <fun>.apply(<obj>,[x1,...]) //<obj>为this指代的对象；[]中填写函数参数；
+    <fun>.call(<obj>, x1,...)   //<obj>为this指代的对象；直接在后面写参数；
         普通函数令<obj>=null即可；
-        装饰器：利用apply改变函数行为；
-                例如统计parseInt()调用次数：
-                    var count = 0;
-                    var oldParseInt = parseInt; // 保存原函数
-                    window.parseInt = function () {
-                        count += 1;     //统计次数
-                        return oldParseInt.apply(null, arguments); // 调用原函数
-                    };
+        装饰器：利用apply改变函数行为；例如统计parseInt()调用次数：
+            var count = 0;
+            var oldParseInt = parseInt; // 保存原函数
+            window.parseInt = function () {
+                count += 1;     //统计次数
+                return oldParseInt.apply(null, arguments); // 调用原函数
+            };
     
 高阶函数：以函数作为参数的函数；以下为以arr为对象的函数；
     <arr>.<fun1>(<fun2>);   <fun1>为以下列出的函数，可以不用循环结构直接整体操作元素；<fun2>为自定义函数；
@@ -294,8 +295,83 @@ JSON：数据格式，将js的对象转换为string；
                 };
             });
 
+原型prototype：
+    <obj>.<key>查找属性，若当前obj没有，就到其原形上找；例如对于数组<arr>：
+        <arr>----> Array.prototype ----> Object.prototype ----> null
+        数组函数<arr>.<fun>(如arr.length等)，其实是定义在数组原形 Array.prototype里的方法；字符串<str>函数等也是同理；
+    创建基于原型的新对象：<obj>=Object.create(<objpro>);
+    用函数构造原型：
+        function <fun>(v) { //创建原型<fun>.prototype；v为属性的值；
+            this.key = v;
+            this.keyf = function () {
+                alert('Hello, ' + this.name + '!');
+            }   }
+        let <obj> = new <fun>(v);   //一定要写new；用<fun>作为原型创建对象
+        constructor属性：指向<fun>; <obj>.constructor ===<fun>.prototype.constructor ===<fun>
+    最好封装，更灵活：
+        function <fun>(props) { //创建原型<fun>，传入参数为对象{key:value;}
+            this.key = props.key; 
+        }
+        <fun>.prototype.<key> = function () {   //给原型添加属性或方法；
+           ...  
+        };
+        function <cfun>(props){     //封装，直接调用cfun创建对象；
+            return new Student(props||{});  //如果props里没有这个参数就返回undefined；通过或运算返回空；
+        }
+        let <obj>=<cfun>({key:value});  //不必按顺序传参数，也不必每个参数都传；
 
+    class类：
+        class <pro>{    //定义类，即原型；
+            constructor(v){ //构造函数，给属性赋值；
+                this.<key> = v
+            }
+            <fun>(){}   //定义方法；this.可以指向pro里的属性；
+        }
+        let <obj>= new <pro>(v);    //以pro为原型的obj
+        继承：
+            class <pro2> extends <pro1>{    //pro2继承pro1
+                constructor(v){
+                    super(<key>);   //如果key的名字相同，需要该命令调用key在父类即<pro1>的构造方法;
+                    this.key2=v2;
+                }
+                <fun>(){}           //定义新的方法；
+            }
 
+BOM
+    window表示全局作用域，也表示浏览器窗口；
+    window.innerWidth/Height    用于显示网页的净宽高；
+    window.outerWidth/Height    整个浏览器窗口宽高；
+    navigator   浏览器信息
+        .appName/.appVersion    浏览器名称/版本；
+        .language   浏览器设置的语言；
+        .platform   操作系统类型；
+        .userAgent   
+    screen      屏幕
+        .width/height
+        .colorDepth     颜色位数；
+    location    页面url
+        .href           得到当前页面url；
+        .reload         重新加载当前页面；
+        .assign("url")  加载新页面；
+    document    指当前页面；DOM树的根节点；
+        .title  HTML的<title>(即上方标签)；可以改变；
+        .getElementById/ElementsByTagName/ElementsByClassName   根据id/标签名/类名获得DOM节点；一组节点为arr；
+        
+
+DOM: HTML被浏览器解析后相当于DOM树；JS可以改变HTML结构；
+    得到DOM节点：
+        用document.getElementBy__命令；可以嵌套；
+            例如：先定位ID为'id'的节点，再返回其内部所有tr节点：：
+                var trs = document.getElementById('id').getElementsByTagName('tr');
+            用类名查找时只能一个类名；
+            .children 获取某节点的所有直属子节点：
+                var <pointc> = <point>.children;
+                获取某节点第一个/最后一个子节点：
+                var <pointc> = <point>.first/lastElementChild;
+        用querySelector(),querySelectorAll()查找满足条件的节点；语法另外查；
+            例如：document.querySelectorAll('div.<c1>.<c2> > <tag>')  查找有c1,c2类名的div标签下的tag标签；
+    更新DOM节点：
+        
 
     
  
