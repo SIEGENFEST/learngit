@@ -88,11 +88,12 @@
             </table>
 
         表单标签：收集用户信息            
-            <form action="">//action内填入要接受信息的服务器的地址；
-                 <fieldset> <legend>表单</legend>//添加边框及标题；
-                （此处可输入文字）<表单元素>//元素就是标签；
-                </fieldset>
-            </form>
+            格式：
+                <form action="" onsubmit="return fun">//action内填入要接受信息的服务器的地址。onsubmit为点击提交时操作，此处fun可以添加函数；"true"时提交；见js。
+                    <fieldset> <legend>表单</legend>//添加边框及标题；
+                    （此处可输入文字）<表单元素>//元素就是标签；
+                    </fieldset>
+                </form>
             元素：
                 <input type="" value="" name="" checked="">
                     type="text"     //明文输入框
@@ -101,23 +102,25 @@
                     type="radio"    //单选框，默认下不会互斥；互斥需要name属性相同；只能一个默认选中；
                     type="checkbox" //多选框；可多个默认选中；
                     type="button"   //按钮；配合js完成操作；
+                        直接<button type="" onclick="">
                     type="image"    //图片定义按钮；
-                    type="hidden"   //不出现在界面；
+                    type="hidden"   //不出现在界面，但会提交；
                     type="reset"    //重置；
                     type="submit"   //提交；
+                    type="date"/"datetime"/"color"
                     name        //有name属性点击submit后才会提交；单选框和多选框中选项name属性需要一致；
                     checked     //默认选择某项则在该项添加checked="checked"属性；
                     value       //文本框为默认填充的文本；选择框为该选项对应提交的内容；
                 <label for="某元素id">文字</label>  //将文字和元素关联；悬停在文字上元素会高亮；只能在form里用；
                 下拉列表选择：
-                <select>
-                    <optgroup label="">//将选项分组；该标签可省略；
-                        <option> </option>
-                    </optgroup>
-                </select>
-                <option>中元素：
-                    selected="selected"//默认选择该条；
-                    value//选择该选项提交上去的值；
+                    <select>
+                        <optgroup label="">//将选项分组；该标签可省略；
+                            <option> </option>
+                        </optgroup>
+                    </select>
+                    <option>中元素：
+                        selected="selected"//默认选择该条；
+                        value//选择该选项提交上去的值；
 
         详情和概要标签：折叠，节省空间
             <details>
@@ -133,13 +136,8 @@
                 <img src="">//引用图片
             </marquee>
 
-
-
-
-
-
-
-
+        如果需要在一个 div 元素中显示一串数学公式，则可以为该 div 元素定义一个数学命名空间。比如这样：
+            <div xmlns="http://www.w3.org/1999/Math/MathMl">x3/x</div>
 
     </body>
 </html>

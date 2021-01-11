@@ -9,6 +9,12 @@
 
 第一行写'use strict'
 每一句末尾都要加半角分号;大小写有区别;
+<script>
+    window.onload=function(){
+        //写在这里；
+    }
+</script>
+
 注释：
     多行：/* */ 快捷键ctrl+/
     单行：//
@@ -355,26 +361,163 @@ BOM
         .assign("url")  加载新页面；
     document    指当前页面；DOM树的根节点；
         .title  HTML的<title>(即上方标签)；可以改变；
-        .getElementById/ElementsByTagName/ElementsByClassName   根据id/标签名/类名获得DOM节点；一组节点为arr；
+        .getElementById/ElementsByTagName/ElementsByClassName("")   根据id/标签名/类名获得DOM节点，一定要引号；一组节点以arr存储；
         
 
 DOM: HTML被浏览器解析后相当于DOM树；JS可以改变HTML结构；
-    得到DOM节点：
-        用document.getElementBy__命令；可以嵌套；
+    得到DOM节点：var <name> = document.getElement__("");
+        用document.getElementBy__("")命令；可以嵌套；
             例如：先定位ID为'id'的节点，再返回其内部所有tr节点：：
                 var trs = document.getElementById('id').getElementsByTagName('tr');
             用类名查找时只能一个类名；
-            .children 获取某节点的所有直属子节点：
-                var <pointc> = <point>.children;
-                获取某节点第一个/最后一个子节点：
-                var <pointc> = <point>.first/lastElementChild;
+        .children 获取某节点的所有直属子节点，为arr，节点改变后会刷新：
+            var <pointc> = <point>.children;
+        获取某节点第一个/最后一个子节点：
+            var <pointc> = <point>.first/lastElementChild;
         用querySelector(),querySelectorAll()查找满足条件的节点；语法另外查；
             例如：document.querySelectorAll('div.<c1>.<c2> > <tag>')  查找有c1,c2类名的div标签下的tag标签；
-    更新DOM节点：
+    
+    创建DOM节点：var <name> = document.creatElement("<tagname>");
+        可以赋值：<DOM>.id="";<DOM>.innerText="";
+    
+    修改DOM节点：节点相当于变量，可读取、赋值、修改；
+        <DOM>.innerHTML     修改DOM节点内的子树；直接替换其中内容；可以设置节点；
+            例如：
+            var pd = document.getElementById("id");
+            pd.innerHTML = "ABC <span style="color:red">RED</span> XYZ";
+        <DOM>.innerText     替换内容，只能填入文本；读取时不返回隐藏元素的文本；
+        .textContent        替换内容，只能填入文本；读取时返回所有文本；
+        .style              修改CSS；变量名是驼峰式命名，可能和CSS不同；赋的值一定要加引号；
+            例如：
+                p.style.color = "#ff0000";
+                p.style.fontSize = "20px";
+        
+        <DOM1>.appendChild(<DOM2>)   将DOM2节点从原来节点剪切添加到DOM1节点的最后一项；
+        <DOMp>.insertBefore(<DOM2>,<DOM1>)  在DOMp节点下面，将DOM2节点插入DOM1节点前面；
+
+    删除DOM节点：得到父节点，再从父节点删除本节点；
+        var <DOMp>=<DOM>.parentElement;
+        var <DOMre> = <DOMp>.removeChild(<DOM>);   //删除了DOM节点，但该节点内容仍然在内存中；此处相当于名为DOMre的节点；
+
+操作表单：（表单也是DOM树）
+    <DOM>.value     获得用户输入值；也可以赋值；例如:
+        // <input type="text" id="id">   某个表单对象；
+        var <DOM> = document.getElementById("id");   //得到表单DOM节点；
+        var x = <DOM>.value;    //获得用户输入值；
+        <DOM>.value = ..;       //给节点赋值；
+    <DOM>.checked   检查选择是否勾选；勾选为true；也可以赋值；
+
+    提交表单：给form标签设置onsubmit属性，引入点击“提交”时执行的函数；
+        例如：
+            <form id="test-form" onsubmit="return checkForm()">
+                <input type="text" name="test">
+                <button type="submit">Submit</button>
+            </form>
+            function checkForm() {
+                var form = document.getElementById('test-form');    // 可以在此修改form的input
+                return true;    //要返回true才会继续提交；
+            }
+
+jQuery：js文件；
+    引入：在HTML里引用jquery文件；
+        <script src="jquery.js"></script>
+    <script>
+        $(document).ready(function(){   //简化: $(function(){})
+            //写在这里；
+        })
+    </script>
+    选择器；
+        按id：          $('#<id>'); 返回jQuery对象，类似数组；如果不存在则返回[];
+        按标签(tag):    $('<tag>');
+        按class：       $('.<class>');
+        按属性：        $('[<key>="value"']);
+            例如：var email = $('[name=email]'); // 找出<??? name="email">、
+            var icons = $('[class^=icon]'); // 找出所有class属性值以icon开头的DOM
+            var names = $('[name$=with]'); // 找出所有name属性值以with结尾的DOM
+        组合：
+            tag+class:  $('<tag>.<class>');
+            tag+属性：  $('<tag>[<key="value"]');
+        多项选择：逗号隔开；选择出的元素不会重复；
+            $('p,div'); // 把<p>和<div>都选出来
+            $('p.red,p.green'); // 把<p class="red">和<p class="green">都选出来
+        
+        层级选择：父节点下的子节点，可以跨多级，不必直属；空格隔开；
+            例如：$('form.test p input');
+        子选择器：直属子节点；>隔开；
+        过滤器：
+            选择部分节点；：写条件；
+                例如：$('ul.lang li:nth-child(even)'); // 选出class='lang'的ul下的，序号为偶数的li标签；
+            表单：
+                form:input :file :checkbox 等
+        查找：
+            向下：节点.find(选择器);
+                例如：ul.find('.dy');   ul下class="dy"的元素；
+            向上：.parent()
+                例如：ul.parent();  ul上层节点；
+            同级：.next()向后一个；.prev()向前一个；
+        <jQuery对象>.filter(选择器或fun) 选出其中满足选择器条件的节点；
+            例如：var langs = $('ul.lang li'); 
+                  var a = langs.filter('.dy');
+        <jQuery对象>.map(fun)
+        <jQuery对象>.fisrt()/.last()/.slice(n,m)返回n到m节点；
+    操作DOM：
+        <jQuery对象>.text/html() 无参数为获取文本/html；有参数为修改文本/html；
+        <jQuery对象>.css(<key>,<value>).css(<key>,<value>)  修改css；没有填value就是获取值；支持链式操作；
+        .addClass('');  添加类；
+        <jQuery对象>.attr('<key>','<value>');   修改节点属性；value不填为获取属性；
+        <jQuery对象>.is('value');   检查是否为该值；
+            例如：var radio = $('#test-radio');radio.is(':checked'); 
+        
+        表单：
+            .val(''); 填入内容；不填为获取内容；
+
+        $(window).width();  获取浏览器窗口大小；
+    <jQuery对象>.on('事件event',function(){})    操作时执行函数；
+        简写：<jQuery对象>.'event'(function(){})
+        事件：
+            click, dblclick, mouseenter, mouseleave, mouse move, hover; submit, focus, blur, change, ready;
+            change：用户使文本框内容变化时触发；
+                var input = $('<input节点>'); input.change(function () {});
+                希望触发change事件：input.change();
+                
+        例如显示鼠标位置：
+            $('#testMouseMoveDiv').mousemove(function (e) { //“testMouseMoveDiv”为放置鼠标的节点id，mousemove事件会将数据（鼠标位置）作为参数（e）传入function；
+                $('#testMouseMoveSpan').text('pageX = ' + e.pageX + ', pageY = ' + e.pageY);    //“testMouseMoveSpan”为显示鼠标位置的节点id，.text()修改显示值；
+            });
+    动画
+
+vs code launch.JSON
+    {
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run hello.js",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/hello.js",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
+            "runtimeExecutable": null,
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "externalConsole": false,
+            "sourceMaps": false,
+            "outDir": null
+        }
+    ]
+}
+
+
+        
         
 
-    
- 
+        
 
 
 
